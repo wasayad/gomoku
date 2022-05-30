@@ -6,6 +6,7 @@ from game_rules import GameRules
 from graphics import button
 
 
+
 class Board:
     def __init__(self):
         run = True

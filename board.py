@@ -7,6 +7,7 @@ from graphics import button
 from ia import Node, Ia
 import numpy as np
 
+
 class Board:
     def __init__(self):
         run = True
@@ -49,8 +50,8 @@ class Board:
         blockSize = 60 #Set the size of the grid block
 
         #draw map
-        for x in range(50, 1130, blockSize):
-            for y in range(50, 1130, blockSize):
+        for x in range(50, 1080, blockSize):
+            for y in range(50, 1080, blockSize):
                 rect = pygame.Rect(x, y, blockSize, blockSize)
                 pygame.draw.rect(surface, (189, 135, 57), rect, 0)
                 pygame.draw.rect(surface, (0,0,0), rect, 1)
@@ -68,7 +69,7 @@ class Board:
             pygame.draw.circle(hover_ball, color[rounds % 2], (round((mouse_pos[0] - 50) / 60) * 60 + 50, round((mouse_pos[1] - 50) / 60) * 60 + 50), 15)
             self.screen.blit(hover_ball, (0,0))
             if (rounds % 2 == 0):
-                move = ia.play(gamerules.board, rounds)
+                move = ia.play(gamerules.board, rounds, gamerules)
                 gamerules.place_stone(move, 1)
                 pygame.draw.circle(surface, color[rounds % 2], (round(move[0]) * 60 + 50, round(move[1]) * 60 + 50), 15)
                 rounds += 1
@@ -93,8 +94,8 @@ class Board:
                                 elif col == 2:
                                     pygame.draw.circle(surface, color[1], (round((x) * 60 + 50), round((y) * 60 + 50)), 15)                   
                             self.screen.blit(surface, (0,0))
-                        print("__________________")
-                        print(ia.node.evaluation_board)
+                        #print("__________________")
+                        #print(ia.node.evaluation_board)
                     if event.type == pygame.QUIT:
                         run = False
             pygame.display.update()

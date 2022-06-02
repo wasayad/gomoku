@@ -20,7 +20,7 @@ class GameRules:
             return False
         if self.board[coordinates[1]][coordinates[0]] > 0:
             return False
-        if self.double_three(coordinates) == False:
+        if self.double_three(coordinates, player) == False:
             return False
         self.board[coordinates[1]][coordinates[0]] = player
         self.check_win(coordinates)
@@ -61,13 +61,20 @@ class GameRules:
                 return 1 if checker[0] in tmp else 2
         return 0
 
-    def double_three(self, c):
+    def check_three(self, three, player):
+        checker = [['002200', '000220'], ['001100', '000110']]
+        if three in checker[player][0] or three in checker[player][1]:
+            return 1
+        return 0
+
+    def double_three(self, c, player):
+        checker = []
+        double_three = 0
         for i in [(-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (1, 1), (0, 1)]:
-            tmp = ''
-            checker = []
             cx = c[1] + i[0]
             cy = c[0] + i[1]
-            for j in range(3):
+            tmp = str(self.board[cx][cy])
+            for j in range(5):
                 cx -= i[0]
                 cy -= i[1]
                 try:
@@ -75,5 +82,8 @@ class GameRules:
                 except:
                     pass
             checker.append(tmp)
-        print(checker)
-        return 0
+        for i in checker:
+            double_three += self.check_three(i, player % 2)
+            if double_three == 2:
+                return False
+        return True

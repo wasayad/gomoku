@@ -37,23 +37,23 @@ class Board:
         rounds = 1
         pygame.quit()
 
-        surface = pygame.surface.Surface((1180, 1180))
-        hover_ball = pygame.surface.Surface((1180, 1180))
-        self.screen = pygame.display.set_mode((1180, 1180))
+        surface = pygame.surface.Surface((590, 590))
+        hover_ball = pygame.surface.Surface((590, 590))
+        self.screen = pygame.display.set_mode((590, 590))
 
         surface.fill((225, 215, 201))
         hover_ball.set_alpha(128)
         
         
-        blockSize = 60 #Set the size of the grid block
+        blockSize = 30 #Set the size of the grid block
 
         #draw map
-        for x in range(50, 1130, blockSize):
-            for y in range(50, 1130, blockSize):
+        for x in range(50, 565, blockSize):
+            for y in range(50, 565, blockSize):
                 rect = pygame.Rect(x, y, blockSize, blockSize)
                 pygame.draw.rect(surface, (189, 135, 57), rect, 0)
                 pygame.draw.rect(surface, (0,0,0), rect, 1)
-                if x == 590 and y == 590: 
+                if x == 295 and y == 295: 
                     pygame.draw.circle(surface, (0,0,0), (x, y), 7)
                     
         # securiser les bordures de map, empecher la superposition de point
@@ -61,13 +61,13 @@ class Board:
             mouse_pos = pygame.mouse.get_pos()
             self.screen.blit(surface, (0,0))
             hover_ball.blit(surface, (0,0))
-            pygame.draw.circle(hover_ball, color[rounds % 2], (round((mouse_pos[0] - 50) / 60) * 60 + 50, round((mouse_pos[1] - 50) / 60) * 60 + 50), 15)
+            pygame.draw.circle(hover_ball, color[rounds % 2], (round((mouse_pos[0] - 50) / 30) * 30 + 50, round((mouse_pos[1] - 50) / 30) * 30 + 50), 15)
             self.screen.blit(hover_ball, (0,0))
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONUP:
-                    if gamerules.place_stone((round((pygame.mouse.get_pos()[0] - 50) / 60), round((pygame.mouse.get_pos()[1] - 50) / 60)), rounds % 2 + 1):
-                        pygame.draw.circle(surface, color[rounds % 2], (round((pygame.mouse.get_pos()[0] - 50) / 60) * 60 + 50, round((pygame.mouse.get_pos()[1] - 50) / 60) * 60 + 50), 15)
-                        gamerules.capture((round((pygame.mouse.get_pos()[0] - 50) / 60), round((pygame.mouse.get_pos()[1] - 50) / 60)))
+                    if gamerules.place_stone((round((pygame.mouse.get_pos()[0] - 50) / 30), round((pygame.mouse.get_pos()[1] - 50) / 30)), rounds % 2 + 1):
+                        pygame.draw.circle(surface, color[rounds % 2], (round((pygame.mouse.get_pos()[0] - 50) / 30) * 30 + 50, round((pygame.mouse.get_pos()[1] - 50) / 30) * 30 + 50), 15)
+                        gamerules.capture((round((pygame.mouse.get_pos()[0] - 50) / 30), round((pygame.mouse.get_pos()[1] - 50) / 30)))
                         rounds += 1
                 if event.type == pygame.QUIT:
                     run = False
